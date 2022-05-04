@@ -1,5 +1,5 @@
 $(function() {
-	$.getJSON('https://ss-pws-dev.com/TestAPI.php', function(data) {
+	$.getJSON('https://ss-pws-dev.com/app/controller/GetDataFromDB.php', function(data) {
 		Object.keys(data).forEach(function (key) {
 			$('#contents').append('<ul id="' + key + '">');
 			data[key].forEach(function (value, index, array) {
