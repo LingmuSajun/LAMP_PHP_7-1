@@ -14,15 +14,12 @@ class RequestService {
 
 	public function __construct() {
 		$this->table_service = new TableService();
-		$this->field_service = new FieldService();
-		$this->condition_service = new ConditionService();
-		$this->order_service = new OrderService();
+		// $this->field_service = new FieldService();
+		// $this->condition_service = new ConditionService();
+		// $this->order_service = new OrderService();
 	}
 
 	public function getRequestParams() {
-
-		var_dump('$_GET');
-		var_dump($_GET);
 
 		$table = $this->__getAndCheckTableParam();
 		if($table === '') {
@@ -57,12 +54,7 @@ class RequestService {
 			return $table;
 		}
 
-		var_dump('$table');
-		exit;
-
 		$available_tables = $this->table_service->getAllTables();
-		var_dump('$available_tables');
-		var_dump($available_tables);
 
 		if(!in_array($_GET['table'], $available_tables, true)) {
 			return $table;
