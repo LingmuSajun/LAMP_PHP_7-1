@@ -7,7 +7,7 @@ class ResponseService {
 		200 => '正常に取得しました。',
 	];
 
-	public function getErrorResponse($response_code) {
+	public function getErrorResponse(int $response_code): array {
 		$response = [];
 		$response['code'] = $response_code;
 		$response['message'] = $this->response_message_list[$response_code];
@@ -15,7 +15,7 @@ class ResponseService {
 		return $response;
 	}
 
-	public function getSuccessResponse($item_list) {
+	public function getSuccessResponse(array $item_list): array {
 		$response = [];
 		$response['code'] = 200;
 		$response['message'] = $this->response_message_list[200];
@@ -24,7 +24,7 @@ class ResponseService {
 		return $response;
 	}
 
-	private function __convertArrayToJsonString($array) {
+	private function __convertArrayToJsonString(array $array): string {
 		header("Access-Control-Allow-Origin: *");
 		$json_string = json_encode($array);
 		return $json_string;

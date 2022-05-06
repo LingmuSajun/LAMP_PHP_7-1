@@ -17,8 +17,6 @@ class GetDataFromDB extends AppController {
 			exit;
 		}
 
-		var_dump('ccc');
-
 		// $table = $_GET['table'];
 		// $country_service = new CountryService();
 	}

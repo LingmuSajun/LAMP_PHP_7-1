@@ -14,23 +14,27 @@ class RequestService {
 
 	public function __construct() {
 		$this->table_service = new TableService();
-		// $this->field_service = new FieldService();
+		$this->field_service = new FieldService();
 		// $this->condition_service = new ConditionService();
 		// $this->order_service = new OrderService();
 	}
 
 	public function getRequestParams() {
 
-		$table = $this->__getAndCheckTableParam();
+		$table = $this->__checkAndFormatTableParam();
 		if($table === '') {
 			return false;
 		}
 
-		if(!isset($_GET['field']) || empty($_GET['field'])) {
+		$available_fields = $this->field_service->getAllFieldsByTable($table);
+		if(empty($available_fields)) {
 			return false;
 		}
 
-		$request_params['field'] = $_GET['field'];
+		$field = $this->__checkAndFormatFieldParam($available_fields);
+		if($field === '') {
+			return false;
+		}
 
 		if(isset($_GET['condition']) && !empty($_GET['condition'])) {
 			$request_params['condition'] = $_GET['condition'];
@@ -41,13 +45,13 @@ class RequestService {
 		}
 
 		$request_params['table'] = $table;
-		$request_params['field'] = $_GET['field'];
+		$request_params['field'] = $field;
 		$request_params['condition'] = $_GET['condition'];
 		$request_params['order'] = $_GET['order'];
 		return $request_params;
 	}
 
-	private function __getAndCheckTableParam() {
+	private function __checkAndFormatTableParam(): string {
 		$table = '';
 
 		if(!isset($_GET['table']) || empty($_GET['table'])) {
@@ -62,6 +66,29 @@ class RequestService {
 
 		$table = $_GET['table'];
 		return $table;
+	}
+
+	private function __checkAndFormatFieldParam(array $available_fields): string {
+		$str_fields = '';
+
+		if(!isset($_GET['field']) || empty($_GET['field'])) {
+			return $str_fields;
+		}
+
+		$arr_request_fields = explode(",", $_GET['field']);
+
+		foreach($arr_request_fields as $arr_request_field) {
+			if(!in_array($arr_request_field, $available_fields, true)) {
+				return $str_fields;
+			}
+		}
+
+		$str_fields = $_GET['field'];
+		return $str_fields;
+	}
+
+	private function __checkAndFormatConditionParam(array $available_fields): array {
+		$condition_fields = [];
 	}
 
 }

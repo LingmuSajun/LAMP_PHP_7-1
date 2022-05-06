@@ -10,6 +10,8 @@ class DBAccessor {
 			return $result;
 		} catch (PDOException $e) {
 			return false;
+		} finally {
+			$pdo = null;
 		}
 	}
 };

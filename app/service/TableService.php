@@ -3,11 +3,11 @@ require_once '../model/Table.php';
 
 class TableService {
 
-	public function getAllTables() {
+	public function getAllTables(): array {
 		$table_model = new Table();
 		$all_tables = $table_model->getAllTables();
 
-		if(false === $all_tables) {
+		if(empty($all_tables)) {
 			return [];
 		}
 
